@@ -1,15 +1,29 @@
 from sys import argv
 from math import *
 
-def slice_type(H, count = 0):
+def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
   y = H // x
+
   for i in range(0, count):
-    if x > y:
-      x -= 1
+    if x == 2 and y == 2:
+      x = min(H, R, C)
+      y = 1
+    elif x > y:
+      x, y = y, x
     else:
       y -= 1
+      if x == 1:
+        x, y = y, x
+
   return x, y
+
+def slice_types(H, R, C):
+  count = 0
+  while slice_type(H, R, C, count) != (1, 1):
+    count += 1
+
+  return count + 1
 
 def validate(nbr_slices, slices, pizza):
   cells = 0
@@ -30,8 +44,6 @@ if __name__ == "__main__":
 
   print(R, C, L, H)
   print(pizza)
-
-  print(slice_type(H))
 
   slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
   nbr_slices = len(slices)

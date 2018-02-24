@@ -29,8 +29,8 @@ class Pizza_slice():
   def getY(self):
     return self.y
 
-  def getWidth():
+  def getWidth(self):
     return self.width
 
-  def getHeight():
+  def getHeight(self):
     return self.height

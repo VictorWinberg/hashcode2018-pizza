@@ -8,7 +8,7 @@ if __name__ == "__main__":
   with open(fname) as f:
     R, C, L, H = map(int, f.readline().split(' '))
     content = f.readlines()
-    pizza = [x.strip() for x in content]
+    pizza = [list(x.strip()) for x in content]
 
   print(R, C, L, H)
   print(pizza)

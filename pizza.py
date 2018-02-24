@@ -11,6 +11,13 @@ def slice_type(H, count = 0):
       y -= 1
   return x, y
 
+def validate(nbr_slices, slices, pizza):
+  cells = 0
+  for s in slices:
+    cells += (s[2] - s[0] + 1) * (s[3] - s[1] + 1)
+  m = len(pizza[0]) * len(pizza)
+  return cells / m
+
 if __name__ == "__main__":
   fname = 'example.in'
   if len(argv) == 2:
@@ -25,3 +32,7 @@ if __name__ == "__main__":
   print(pizza)
 
   print(slice_type(H))
+
+  slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
+  nbr_slices = len(slices)
+  print(validate(nbr_slices, slices, pizza))

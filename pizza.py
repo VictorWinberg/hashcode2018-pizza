@@ -6,7 +6,7 @@ if __name__ == "__main__":
     fname = argv[1]
 
   with open(fname) as f:
-    R, C, L, H = f.readline().split(' ')
+    R, C, L, H = map(int, f.readline().split(' '))
     content = f.readlines()
     pizza = [x.strip() for x in content]
 

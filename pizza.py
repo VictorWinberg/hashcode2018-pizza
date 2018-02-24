@@ -1,7 +1,7 @@
 from sys import argv
 from math import *
 from pizza_slice import Pizza_slice
-from random import randint
+from random import randint, uniform
 
 def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
@@ -62,7 +62,7 @@ def solve(pizza, R, C, L, H):
   slice_nbr = 1
   squares_used = [[0 for x in range(C)] for y in range(R)]
   max_s = slice_types(H, R, C)
-  for i in range(100 * R * C):
+  for i in range(10 * R * C):
     x = randint(0, R)
     y = randint(0, C)
     s = randint(0, max_s)
@@ -73,12 +73,14 @@ def solve(pizza, R, C, L, H):
       put_slice(ps, squares_used, slice_nbr)
       slice_nbr += 1
 
-  print(squares_used)
+  return uniform(0, 1), [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
 
 if __name__ == "__main__":
   fname = 'example.in'
+  count = 100
   if len(argv) == 2:
     fname = argv[1]
+
 
   with open(fname) as f:
     R, C, L, H = map(int, f.readline().split(' '))
@@ -87,8 +89,12 @@ if __name__ == "__main__":
 
   print(R, C, L, H)
   print(pizza)
+  scores = {}
+  for i in range(count):
+    score, slices = solve(pizza, R, C, L, H)
+    scores[score] = slices
+  print(scores[max(scores, key=float)], max(scores, key=float))
 
-  solve(pizza, R, C, L, H)
   slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
 
   print(validate(slices, pizza))

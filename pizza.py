@@ -1,6 +1,6 @@
 from sys import argv
 from math import *
-from pizza_slice import _Pizza_slice
+from pizza_slice import Pizza_slice
 
 def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
@@ -33,7 +33,7 @@ def validate(slices, pizza):
 
 def cnt_ing(ps, pizza, L):
   nbr_ing = {'T':0, 'M': 0}
-  for i in range(ps.getX() + ps.getWidth):
+  for i in range(ps.getX() + ps.getWidth()):
     for j in range(ps.getY() + ps.getHeight()):
       if(i < len(pizza) and j < len(pizza[0])):
         nbr_ing[pizza[i][j]] += 1
@@ -42,30 +42,33 @@ def cnt_ing(ps, pizza, L):
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
 def validate_pos(pizza_slice, used, nbr):
-    for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
-        for y in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getRow()):
-            if(used[x, y] != 0):
+    for x in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
+        for y in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
+            if(used[x][y] != 0):
                 return False
     return True
 
 def put_slice(pizza_slice, used, nbr) :
-    for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
-        for y in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getHeight()):
-            used[x, y] = nbr
+    for x in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
+        for y in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
+            used[x][y] = nbr
     nbr += 1
 
 
 def try_slice(pizza_slice, pizza, used, nbr , L):
-  return cnt_ing(pizza_slice, pizza, L) and validate_pos(pizza_slice, used, nbr)
+  if cnt_ing(pizza_slice, pizza, L):
+    return validate_pos(pizza_slice, used, nbr)
+  return  False
 
 def solve(pizza, R, C, L, H):
   slice_nbr = 1
-  squares_used = [[0 for x in range(R)] for y in range(C)]
-  for x in range(0, R):
-    for y in range(0, C):
-      for s in range(0, slice_types(H, R, C)):
+  squares_used = [[0 for x in range(C)] for y in range(R)]
+  print(squares_used)
+  for x in range(R):
+    for y in range(C):
+      for s in range(slice_types(H, R, C)):
         slice_width, slice_height = slice_type(H, R, C, s)
-        ps = _Pizza_slice(slice_width, slice_height, x, y)
+        ps = Pizza_slice(slice_width, slice_height, x, y)
         if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
           put_slice(ps, squares_used, slice_nbr)
           x += 0

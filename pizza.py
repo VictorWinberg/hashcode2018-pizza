@@ -3,10 +3,10 @@ from math import *
 
 class _Pizza_slice:
     def __init__(self, row, col, x, y):
-        self.row = row;
-        self.col = col;
-        self.x = x;
-        self.y = y;
+        self.row = row
+        self.col = col
+        self.x = x
+        self.y = y
         def get_pos():
             return self.x, self.y;
         def get_dimensions():
@@ -16,7 +16,7 @@ class _Pizza_slice:
         def set_y(self, i):
             self.y = i
         def set_row(self, i):
-            self.row = i;
+            self.row = i
         def set_col(self, i):
             col = i
 
@@ -40,12 +40,12 @@ def validate(slices, pizza):
 
 def try_slice():
     return true
-def put_slice(nbr_rows, nbr_cols, x, y) :
-    for x in range(x, x+nbr_rows):
-        squares_used[x] = slice_nbr;
-        for x in range(y, y+nbr_cols):
-            squares_used[y] = slice_nbr;
-            slice_nbr++:
+def put_slice(pizza_slice, used, nbr) :
+    for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getRow()):
+        used[x] = nbr
+    for x in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getCol()):
+        squares_used[y] = nbr
+    nbr++
 
 if __name__ == "__main__":
   fname = 'example.in'
@@ -63,7 +63,8 @@ if __name__ == "__main__":
     for x in range(0, R):
         for y in range(0, C):
             for s in range(0, 1):  #1 ska ändras till hur många gånger man kan kalla på try_slices
-                if(try_slice(x, y, slice_type(H, s)))
+                ps = Pizza_slice(slice_type(H, s, x, y))
+                if(try_slice(ps, squares_used, slice_nbr)):
                     put_slice()
 
   print(R, C, L, H)

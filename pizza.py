@@ -38,7 +38,6 @@ def cnt_ing(pizza_slice, pizza, L):
         nbr_ing[pizza[i][j]] += 1
       else:
         return False
-  print(nbr_ing['T'] >= L and nbr_ing['M'] >=L)
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
 def validate_pos(pizza_slice, used, nbr):

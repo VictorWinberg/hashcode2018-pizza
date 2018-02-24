@@ -6,7 +6,6 @@ from random import randint, uniform
 def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
   y = H // x
-
   for i in range(0, count):
     if x == 2 and y == 2:
       x = min(H, R, C)
@@ -17,7 +16,6 @@ def slice_type(H, R, C, count = 0):
       y -= 1
       if x == 1:
         x, y = y, x
-
   return x, y
 
 def slice_types(H, R, C):
@@ -50,6 +48,7 @@ def validate_pos(ps, used, nbr):
 
 def try_slice(ps, pizza, used, nbr , L):
   return cnt_ing(ps, pizza, L) and validate_pos(ps, used, nbr)
+
 def put_slice(ps, used, nbr) :
   for x in range(ps.x, ps.x + ps.width):
     for y in range(ps.y, ps.y + ps.height):
@@ -59,7 +58,7 @@ def put_slice(ps, used, nbr) :
 def translate(slices):
   out_slices = []
   for s in slices:
-    out_slices.append([s.x, s.y, (s.x + s.width),(s.y + s.height)])
+    out_slices.append([s.x, s.y, (s.x + s.width - 1),(s.y + s.height - 1)])
   return out_slices
 
 def solve(pizza, R, C, L, H):
@@ -79,6 +78,7 @@ def solve(pizza, R, C, L, H):
       slice_nbr += 1
 
   out_slices = translate(slices)
+
   return validate(out_slices, pizza),out_slices
 
 if __name__ == "__main__":

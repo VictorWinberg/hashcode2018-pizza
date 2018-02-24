@@ -8,8 +8,8 @@ class Pizza_slice():
   def get_pos():
     return self.x, self.y
 
-    def get_dimensions():
-      return self.width, self.height
+  def get_dimensions():
+    return self.width, self.height
 
   def set_x(self, i):
     self.x = i
@@ -17,11 +17,11 @@ class Pizza_slice():
   def set_y(self, i):
     self.y = i
 
-    def set_width(self, i):
-      self.width = i
+  def set_width(self, i):
+    self.width = i
 
-    def set_height(self, i):
-      self.height = i
+  def set_height(self, i):
+    self.height = i
 
   def getX(self):
     return self.x
@@ -29,8 +29,8 @@ class Pizza_slice():
   def getY(self):
     return self.y
 
-    def getWidth():
-      return self.width
+  def getWidth():
+    return self.width
 
-    def getHeight():
-      return self.height
+  def getHeight():
+    return self.height

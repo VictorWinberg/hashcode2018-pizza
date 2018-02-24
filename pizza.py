@@ -51,6 +51,7 @@ def put_slice(pizza_slice, used, nbr) :
   for x in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
     for y in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
       used[x][y] = nbr
+  return pizza_slice
 
 
 def try_slice(pizza_slice, pizza, used, nbr , L):
@@ -70,6 +71,8 @@ def solve(pizza, R, C, L, H):
           x += 0
           y += 0
   print(squares_used)
+
+
 if __name__ == "__main__":
   fname = 'example.in'
   if len(argv) == 2:

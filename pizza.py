@@ -31,23 +31,22 @@ def validate(slices, pizza):
   m = len(pizza[0]) * len(pizza)
   return cells / m
 
-def cnt_ing(x, y, slice_x, slice_y, pizza, L):
+def cnt_ing(ps, pizza, L):
   nbr_ing = {'T':0, 'M': 0}
-  for i in range(x + slice_x):
-    for j in range(y + slice_y):
+  for i in range(ps.getX() + ps.getWidth):
+    for j in range(ps.getY() + ps.getHeight()):
       if(i < len(pizza) and j < len(pizza[0])):
         nbr_ing[pizza[i][j]] += 1
       else:
         return False
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
-def validate_pos(pizza_slice, used):
+def validate_pos(pizza_slice, used, nbr):
     for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
         for y in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getRow()):
             if(used[x, y] != 0):
                 return False
     return True
-
 
 def put_slice(pizza_slice, used, nbr) :
     for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
@@ -71,13 +70,6 @@ def solve(pizza, R, C, L, H):
           put_slice(ps, squares_used, slice_nbr)
           x += 0
           y += 0
-
-def put_slice(pizza_slice, used, nbr) :
-  for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getRow()):
-    used[x] = nbr
-    for x in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getCol()):
-      squares_used[y] = nbr
-      nbr += 1
 
 if __name__ == "__main__":
   fname = 'example.in'

@@ -19,7 +19,6 @@ def slice_type(H, R, C, count = 0):
 
   return x, y
 
-
 def slice_types(H, R, C):
   count = 0
   while slice_type(H, R, C, count) != (1, 1):
@@ -50,7 +49,7 @@ def try_slice(x, y, slice_x, slice_y, pizza, L):
 def solve(pizza, R, C, L, H):
   for x in range(0, R):
     for y in range(0, C):
-      for s in range(0, 1):  #1 ska ändras till hur många gånger man kan kalla på try_slices
+      for s in range(0, slice_types(H, R, C)):
         slice_x, slice_y = slice_type(H, R, C, s)
         if(try_slice(x, y, slice_x, slice_y, pizza, L)):
           # put_slice()
@@ -77,7 +76,6 @@ if __name__ == "__main__":
   print(R, C, L, H)
   print(pizza)
 
-  print(slice_type(H, R, C))
   solve(pizza, R, C, L, H)
   slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
 

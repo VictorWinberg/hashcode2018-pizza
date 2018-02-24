@@ -1,6 +1,34 @@
 from sys import argv
 from math import *
 
+class _Pizza_slice:
+    def __init__(self, row, col, x, y):
+        self.row = row
+        self.col = col
+        self.x = x
+        self.y = y
+        def get_pos():
+            return self.x, self.y;
+        def get_dimensions():
+            return self.row, self.col;
+        def set_x(self, i):
+            self.x = i
+        def set_y(self, i):
+            self.y = i
+        def set_row(self, i):
+            self.row = i
+        def set_col(self, i):
+            col = i
+        def getX():
+            return self.x;
+        def getY():
+            return self.y;
+        def getRow():
+            return self.row;
+        def getCol():
+            return self.col;
+
+
 def slice_type(H, count = 0):
   x = floor(sqrt(H))
   y = H // x
@@ -43,6 +71,12 @@ def solve(pizza, R, C, L, H):
           x += 0
           y += 0
 
+def put_slice(pizza_slice, used, nbr) :
+  for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getRow()):
+    used[x] = nbr
+    for x in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getCol()):
+      squares_used[y] = nbr
+      nbr += 1
 
 if __name__ == "__main__":
   fname = 'example.in'
@@ -56,6 +90,7 @@ if __name__ == "__main__":
 
   print(R, C, L, H)
   print(pizza)
+
 
   print(slice_type(H))
   solve(pizza, R, C, L, H)

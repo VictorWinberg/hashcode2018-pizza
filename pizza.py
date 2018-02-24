@@ -19,6 +19,14 @@ class _Pizza_slice:
             self.row = i
         def set_col(self, i):
             col = i
+        def getX():
+            return self.x;
+        def getY():
+            return self.y;
+        def getRow():
+            return self.row;
+        def getCol():
+            return self.col;
 
 
 def slice_type(H, count = 0):

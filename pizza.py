@@ -39,15 +39,30 @@ class _Pizza_slice:
       return self.col
 
 
-def slice_type(H, count = 0):
+def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
   y = H // x
+
   for i in range(0, count):
-    if x > y:
-      x -= 1
+    if x == 2 and y == 2:
+      x = min(H, R, C)
+      y = 1
+    elif x > y:
+      x, y = y, x
     else:
       y -= 1
+      if x == 1:
+        x, y = y, x
+
   return x, y
+
+
+def slice_types(H, R, C):
+  count = 0
+  while slice_type(H, R, C, count) != (1, 1):
+    count += 1
+
+  return count + 1
 
 def validate(slices, pizza):
   cells = sum((s[2] - s[0] + 1) * (s[3] - s[1] + 1) for s in slices)
@@ -73,7 +88,7 @@ def solve(pizza, R, C, L, H):
   for x in range(0, R):
     for y in range(0, C):
       for s in range(0, 1):  #1 ska ändras till hur många gånger man kan kalla på try_slices
-        slice_x, slice_y = slice_type(H, s)
+        slice_x, slice_y = slice_type(H, R, C, s)
         if(try_slice(x, y, slice_x, slice_y, pizza, L)):
           # put_slice()
           x += 0
@@ -99,9 +114,8 @@ if __name__ == "__main__":
   print(R, C, L, H)
   print(pizza)
 
-
-  print(slice_type(H))
+  print(slice_type(H, R, C))
   solve(pizza, R, C, L, H)
   slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
-  nbr_slices = len(slices)
+
   print(validate(slices, pizza))

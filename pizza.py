@@ -31,7 +31,7 @@ def validate(slices, pizza):
   m = len(pizza[0]) * len(pizza)
   return cells / m
 
-def cnt_ing(x, y, slice_x, slice_y, pizza, L):
+def cnt_ing(pizza_slice, pizza, L):
   nbr_ing = {}
   nbr_ing['T'] = 0
   nbr_ing['M'] = 0
@@ -43,16 +43,34 @@ def cnt_ing(x, y, slice_x, slice_y, pizza, L):
         return False
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
-def try_slice(x, y, slice_x, slice_y, pizza, L):
-  return cnt_ing(x, y, slice_x, slice_y, pizza, L)
+def validate_pos(pizza_slice, used):
+    for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
+        for y in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getRow()):
+            if(used[x, y] != 0):
+                return False
+    return True
+
+
+def put_slice(pizza_slice, used, nbr) :
+    for x in range(pizza_slice.getX(), pizza_slice.getX()+pizza_slice.getWidth()):
+        for y in range(pizza_slice.getY(), pizza_slice.getY()+pizza_slice.getHeight()):
+            used[x, y] = nbr
+    nbr += 1
+
+
+def try_slice(pizza_slice, pizza, used, nbr , L):
+  return cnt_ing(pizza_slice, pizza, L) and validate_pos(pizza_slice, used, nbr)
 
 def solve(pizza, R, C, L, H):
+  slice_nbr = 1
+  squares_used = [[0 for x in range(R)] for y in range(C)]
   for x in range(0, R):
     for y in range(0, C):
       for s in range(0, slice_types(H, R, C)):
-        slice_x, slice_y = slice_type(H, R, C, s)
-        if(try_slice(x, y, slice_x, slice_y, pizza, L)):
-          # put_slice()
+        slice_width, slice_height = slice_type(H, R, C, s)
+        ps = _Pizza_slice(slice_width, slice_height, x, y)
+        if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
+          put_slice(ps, squares_used, slice_nbr)
           x += 0
           y += 0
 

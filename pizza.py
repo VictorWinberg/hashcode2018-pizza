@@ -30,31 +30,31 @@ def validate(slices, pizza):
   m = len(pizza[0]) * len(pizza)
   return cells / m
 
-def cnt_ing(pizza_slice, pizza, L):
+def cnt_ing(ps, pizza, L):
   nbr_ing = {'T': 0, 'M': 0}
-  for i in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
-    for j in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
+  for i in range(ps.x, ps.x + ps.width):
+    for j in range(ps.y, ps.y + ps.height):
       if(i < len(pizza) and j < len(pizza[0])):
         nbr_ing[pizza[i][j]] += 1
       else:
         return False
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
-def validate_pos(pizza_slice, used, nbr):
-  for x in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
-    for y in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
+def validate_pos(ps, used, nbr):
+  for x in range(ps.x, ps.x + ps.width):
+    for y in range(ps.y, ps.y + ps.height):
       if(used[x][y] != 0):
         return False
   return True
 
-def put_slice(pizza_slice, used, nbr) :
-  for x in range(pizza_slice.getX(), pizza_slice.getX() + pizza_slice.getWidth()):
-    for y in range(pizza_slice.getY(), pizza_slice.getY() + pizza_slice.getHeight()):
+def put_slice(ps, used, nbr) :
+  for x in range(ps.x, ps.x + ps.width):
+    for y in range(ps.y, ps.y + ps.height):
       used[x][y] = nbr
 
 
-def try_slice(pizza_slice, pizza, used, nbr , L):
-  return cnt_ing(pizza_slice, pizza, L) and validate_pos(pizza_slice, used, nbr)
+def try_slice(ps, pizza, used, nbr , L):
+  return cnt_ing(ps, pizza, L) and validate_pos(ps, used, nbr)
 
 def solve(pizza, R, C, L, H):
   slice_nbr = 1
@@ -63,9 +63,9 @@ def solve(pizza, R, C, L, H):
     for y in range(C):
       for s in range(slice_types(H, R, C)):
         slice_width, slice_height = slice_type(H, R, C, s)
-        pizza_slice = Pizza_slice(slice_width, slice_height, x, y)
-        if(try_slice(pizza_slice, pizza, squares_used, slice_nbr, L)):
-          put_slice(pizza_slice, squares_used, slice_nbr)
+        ps = Pizza_slice(slice_width, slice_height, x, y)
+        if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
+          put_slice(ps, squares_used, slice_nbr)
           slice_nbr += 1
           x += 0
           y += 0

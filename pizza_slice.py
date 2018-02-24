@@ -1,7 +1,7 @@
 class _Pizza_slice:
-  def __init__(self, row, col, x, y):
-    self.row = row
-    self.col = col
+  def __init__(self, width, height, x, y):
+    self.width = width
+    self.height = height
     self.x = x
     self.y = y
 
@@ -17,10 +17,10 @@ class _Pizza_slice:
     def set_y(self, i):
       self.y = i
 
-    def set_row(self, i):
+    def set_width(self, i):
       self.row = i
 
-    def set_col(self, i):
+    def set_height(self, i):
       self.col = i
 
     def getX():
@@ -29,8 +29,8 @@ class _Pizza_slice:
     def getY():
       return self.y
 
-    def getRow():
+    def getWidth():
       return self.row
 
-    def getCol():
+    def getRow():
       return self.col

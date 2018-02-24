@@ -48,20 +48,25 @@ def validate_pos(ps, used, nbr):
         return False
   return True
 
+def try_slice(ps, pizza, used, nbr , L):
+  return cnt_ing(ps, pizza, L) and validate_pos(ps, used, nbr)
 def put_slice(ps, used, nbr) :
   for x in range(ps.x, ps.x + ps.width):
     for y in range(ps.y, ps.y + ps.height):
       used[x][y] = nbr
   return ps
 
-
-def try_slice(ps, pizza, used, nbr , L):
-  return cnt_ing(ps, pizza, L) and validate_pos(ps, used, nbr)
+def translate(slices):
+  out_slices = []
+  for(s in slices):
+    out_slices.append( s.x + " " + s.y + " " + (s.x + s.width) + " " + (s.y + s.height))
+  return out_slices
 
 def solve(pizza, R, C, L, H):
   slice_nbr = 1
   squares_used = [[0 for x in range(C)] for y in range(R)]
   max_s = slice_types(H, R, C)
+  slices = []
   for i in range(100 * R * C):
     x = randint(0, R)
     y = randint(0, C)
@@ -70,9 +75,10 @@ def solve(pizza, R, C, L, H):
     slice_width, slice_height = slice_type(H, R, C, s)
     ps = Pizza_slice(slice_width, slice_height, x, y)
     if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
-      put_slice(ps, squares_used, slice_nbr)
+      slices.append(put_slice(ps, squares_used, slice_nbr))
       slice_nbr += 1
 
+  out_slices = translate(slices)
   print(squares_used)
 
 if __name__ == "__main__":

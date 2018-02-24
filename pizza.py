@@ -32,9 +32,7 @@ def validate(slices, pizza):
   return cells / m
 
 def cnt_ing(x, y, slice_x, slice_y, pizza, L):
-  nbr_ing = {}
-  nbr_ing['T'] = 0
-  nbr_ing['M'] = 0
+  nbr_ing = {'T':0, 'M': 0}
   for i in range(x + slice_x):
     for j in range(y + slice_y):
       if(i < len(pizza) and j < len(pizza[0])):

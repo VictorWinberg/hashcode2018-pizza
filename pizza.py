@@ -52,6 +52,7 @@ def put_slice(ps, used, nbr) :
   for x in range(ps.x, ps.x + ps.width):
     for y in range(ps.y, ps.y + ps.height):
       used[x][y] = nbr
+  return ps
 
 
 def try_slice(ps, pizza, used, nbr , L):

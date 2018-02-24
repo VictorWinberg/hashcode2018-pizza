@@ -1,6 +1,26 @@
 from sys import argv
 from math import *
 
+class _Pizza_slice:
+    def __init__(self, row, col, x, y):
+        self.row = row;
+        self.col = col;
+        self.x = x;
+        self.y = y;
+        def get_pos():
+            return self.x, self.y;
+        def get_dimensions():
+            return self.row, self.col;
+        def set_x(self, i):
+            self.x = i
+        def set_y(self, i):
+            self.y = i
+        def set_row(self, i):
+            self.row = i;
+        def set_col(self, i):
+            col = i
+
+
 def slice_type(H, count = 0):
   x = floor(sqrt(H))
   y = H // x
@@ -20,7 +40,12 @@ def validate(slices, pizza):
 
 def try_slice():
     return true
-
+def put_slice(nbr_rows, nbr_cols, x, y) :
+    for x in range(x, x+nbr_rows):
+        squares_used[x] = slice_nbr;
+        for x in range(y, y+nbr_cols):
+            squares_used[y] = slice_nbr;
+            slice_nbr++:
 
 if __name__ == "__main__":
   fname = 'example.in'
@@ -32,15 +57,18 @@ if __name__ == "__main__":
     content = f.readlines()
     pizza = [list(x.strip()) for x in content]
 
+
+  slice_nbr = 1;
+  squares_used = [[0 for x in range(R)] for y in range(C)]
     for x in range(0, R):
         for y in range(0, C):
             for s in range(0, 1):  #1 ska ändras till hur många gånger man kan kalla på try_slices
                 if(try_slice(x, y, slice_type(H, s)))
                     put_slice()
 
-
   print(R, C, L, H)
   print(pizza)
+
 
   print(slice_type(H))
 

@@ -1,6 +1,7 @@
 from sys import argv
 from math import *
 from pizza_slice import Pizza_slice
+from random import randint
 
 def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
@@ -59,17 +60,20 @@ def try_slice(ps, pizza, used, nbr , L):
 def solve(pizza, R, C, L, H):
   slice_nbr = 1
   squares_used = [[0 for x in range(C)] for y in range(R)]
-  for x in range(R):
-    for y in range(C):
-      for s in range(slice_types(H, R, C)):
-        slice_width, slice_height = slice_type(H, R, C, s)
-        ps = Pizza_slice(slice_width, slice_height, x, y)
-        if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
-          put_slice(ps, squares_used, slice_nbr)
-          slice_nbr += 1
-          x += 0
-          y += 0
+  max_s = slice_types(H, R, C)
+  for i in range(100 * R * C):
+    x = randint(0, R)
+    y = randint(0, C)
+    s = randint(0, max_s)
+
+    slice_width, slice_height = slice_type(H, R, C, s)
+    ps = Pizza_slice(slice_width, slice_height, x, y)
+    if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
+      put_slice(ps, squares_used, slice_nbr)
+      slice_nbr += 1
+
   print(squares_used)
+
 if __name__ == "__main__":
   fname = 'example.in'
   if len(argv) == 2:

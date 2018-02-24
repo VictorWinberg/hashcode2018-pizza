@@ -60,7 +60,6 @@ def translate(slices):
   out_slices = []
   for s in slices:
     out_slices.append([s.x, s.y, (s.x + s.width),(s.y + s.height)])
-  print(out_slices)
   return out_slices
 
 def solve(pizza, R, C, L, H):

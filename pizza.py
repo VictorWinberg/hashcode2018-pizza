@@ -1,7 +1,13 @@
 from sys import argv
-from math import *
-from pizza_slice import Pizza_slice
-from random import randint, uniform
+from math import floor, sqrt
+from random import randint
+
+class Pizza_slice():
+  def __init__(self, width, height, x, y):
+    self.width = width
+    self.height = height
+    self.x = x
+    self.y = y
 
 def slice_type(H, R, C, count = 0):
   x = floor(sqrt(H))
@@ -29,64 +35,57 @@ def validate(slices, pizza):
   m = len(pizza[0]) * len(pizza)
   return cells / m
 
-def cnt_ing(ps, pizza, L):
-  nbr_ing = {'T': 0, 'M': 0}
-  for i in range(ps.x, ps.x + ps.width):
-    for j in range(ps.y, ps.y + ps.height):
-      if(i < len(pizza) and j < len(pizza[0])):
+def validate_slice(ps, pizza, used, L):
+  nbr_ing = { 'T': 0, 'M': 0 }
+  for i in range(ps.y, ps.y + ps.height):
+    for j in range(ps.x, ps.x + ps.width):
+      if i < len(pizza) and j < len(pizza[0]) and used[i][j] == 0:
         nbr_ing[pizza[i][j]] += 1
       else:
         return False
   return nbr_ing['T'] >= L and nbr_ing['M'] >=L
 
-def validate_pos(ps, used, nbr):
-  for x in range(ps.x, ps.x + ps.width):
-    for y in range(ps.y, ps.y + ps.height):
-      if(used[x][y] != 0):
-        return False
-  return True
-
-def try_slice(ps, pizza, used, nbr , L):
-  return cnt_ing(ps, pizza, L) and validate_pos(ps, used, nbr)
-
 def put_slice(ps, used, nbr) :
-  for x in range(ps.x, ps.x + ps.width):
-    for y in range(ps.y, ps.y + ps.height):
+  for y in range(ps.x, ps.x + ps.width):
+    for x in range(ps.y, ps.y + ps.height):
       used[x][y] = nbr
   return ps
 
-def translate(slices):
-  out_slices = []
-  for s in slices:
-    out_slices.append([s.x, s.y, (s.x + s.width - 1),(s.y + s.height - 1)])
-  return out_slices
+def to_out(ps):
+  return [ps.y, ps.x, (ps.y + ps.height - 1), (ps.x + ps.width - 1)]
 
-def solve(pizza, R, C, L, H):
-  slice_nbr = 1
+def solve(pizza, R, C, L, H, seed):
+  ps_nbr = 1
   squares_used = [[0 for x in range(C)] for y in range(R)]
   max_s = slice_types(H, R, C)
   slices = []
-  for i in range(100 * R * C):
+  for i in range(seed * R * C):
     x = randint(0, R)
     y = randint(0, C)
     s = randint(0, max_s)
 
-    slice_width, slice_height = slice_type(H, R, C, s)
-    ps = Pizza_slice(slice_width, slice_height, x, y)
-    if(try_slice(ps, pizza, squares_used, slice_nbr, L)):
-      slices.append(put_slice(ps, squares_used, slice_nbr))
-      slice_nbr += 1
+    ps_width, ps_height = slice_type(H, R, C, s)
+    ps = Pizza_slice(ps_width, ps_height, x, y)
+    if validate_slice(ps, pizza, squares_used, L):
+      slices.append(to_out(put_slice(ps, squares_used, ps_nbr)))
+      ps_nbr += 1
 
-  out_slices = translate(slices)
-
-  return validate(out_slices, pizza),out_slices
+  return validate(slices, pizza),slices
 
 if __name__ == "__main__":
-  fname = 'example.in'
-  count = 100
+  fname = 'medium.in'
+
+  count = 5
+  seed = 10
   if len(argv) == 2:
     fname = argv[1]
 
+  elif len(argv) == 4:
+    fname = argv[1]
+    count = int(argv[2])
+    seed = int(argv[3])
+
+  out_f = 'solution' + fname[:-3] + '.txt'
 
   with open(fname) as f:
     R, C, L, H = map(int, f.readline().split(' '))
@@ -94,13 +93,17 @@ if __name__ == "__main__":
     pizza = [list(x.strip()) for x in content]
 
   print(R, C, L, H)
-  print(pizza)
+
   scores = {}
   for i in range(count):
-    score, slices = solve(pizza, R, C, L, H)
+    score, slices = solve(pizza, R, C, L, H, seed)
     scores[score] = slices
-  print(scores[max(scores, key=float)], max(scores, key=float))
+    if (count <= 20): # Just to see progress for big/medium
+      print("Progress {}/{}".format(i + 1, count))
 
-  slices = [[0, 0, 2, 1], [0, 2 ,2, 2], [0, 3, 2, 4]]
-
-  print(validate(slices, pizza))
+  m_score = max(scores, key=float)
+  print(m_score)
+  with open(out_f, 'w') as f:
+    f.write(str(len(scores[m_score])) + '\n')
+    for s in scores[m_score]:
+      f.write(' '.join([str(a)  for a in s]) + '\n')
